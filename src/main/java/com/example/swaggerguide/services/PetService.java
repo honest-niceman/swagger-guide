@@ -3,11 +3,11 @@ package com.example.swaggerguide.services;
 import com.example.swaggerguide.mappers.PetMapper;
 import com.example.swaggerguide.model.Pet;
 import com.example.swaggerguide.repositories.PetRepository;
+import com.swagger.client.codegen.rest.api.PetApi;
+import com.swagger.client.codegen.rest.model.PetDto;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.List;
-import com.swagger.client.codegen.rest.api.PetApi;
 
 @Service
 public class PetService {
@@ -27,18 +27,15 @@ public class PetService {
         return petRepository.existsById(id) ? updatePetById(id) : addPet(id);
     }
 
-    public List<Pet> findInactivePets() {
-        return petRepository.findInactivePets();
-    }
-
     private Pet addPet(Long id) {
-        Pet pet = petMapper.petDtoToPet(petApi.getPetById(id));
+        PetDto petDto = petApi.getPetById(id);
+        Pet pet = petMapper.toEntity(petDto);
         return petRepository.save(pet);
     }
 
     private Pet updatePetById(Long id) {
         Pet pet = petRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-        Pet updatedPet = petMapper.partialUpdateFromPetDto(petApi.getPetById(id), pet);
+        Pet updatedPet = petMapper.partialUpdate(petApi.getPetById(id), pet);
         return petRepository.save(updatedPet);
     }
 }

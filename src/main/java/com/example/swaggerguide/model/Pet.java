@@ -1,8 +1,8 @@
 package com.example.swaggerguide.model;
 
 import javax.persistence.*;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "pet")
@@ -11,24 +11,20 @@ public class Pet {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "user_id")
     private User user;
 
     @Column(name = "name")
     private String name;
 
-    @OneToMany(orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "pet_id")
-    private Set<Tag> tags = new LinkedHashSet<>();
+    private List<Visit> visits = new ArrayList<>();
 
-    @OneToMany(orphanRemoval = true)
-    @JoinColumn(name = "pet_id")
-    private Set<Visit> visits = new LinkedHashSet<>();
+    public List<Visit> getVisits() {return visits;}
 
-    public Set<Visit> getVisits() {return visits;}
-
-    public void setVisits(Set<Visit> visits) {this.visits = visits;}
+    public void setVisits(List<Visit> visits) {this.visits = visits;}
 
     public Long getId() {return id;}
 
@@ -41,9 +37,4 @@ public class Pet {
     public String getName() {return name;}
 
     public void setName(String name) {this.name = name;}
-
-    public Set<Tag> getTags() {return tags;}
-
-    public void setTags(Set<Tag> tags) {this.tags = tags;}
-
 }

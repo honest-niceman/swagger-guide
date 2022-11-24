@@ -241,56 +241,6 @@
         ]
       }
     },
-    "/pet/findByTags": {
-      "get": {
-        "tags": [
-          "pet"
-        ],
-        "summary": "Finds Pets by tags",
-        "description": "Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.",
-        "operationId": "findPetsByTags",
-        "produces": [
-          "application/json",
-          "application/xml"
-        ],
-        "parameters": [
-          {
-            "name": "tags",
-            "in": "query",
-            "description": "Tags to filter by",
-            "required": true,
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "collectionFormat": "multi"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/PetDto"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid tag value"
-          }
-        },
-        "security": [
-          {
-            "petclinic_auth": [
-              "write:pets",
-              "read:pets"
-            ]
-          }
-        ],
-        "deprecated": true
-      }
-    },
     "/pet/{petId}": {
       "get": {
         "tags": [
@@ -906,18 +856,6 @@
           "type": "string",
           "example": "doggie"
         },
-        "tags": {
-          "type": "array",
-          "xml": {
-            "wrapped": true
-          },
-          "items": {
-            "xml": {
-              "name": "tag"
-            },
-            "$ref": "#/definitions/TagDto"
-          }
-        },
         "visits": {
           "type": "array",
           "xml": {
@@ -935,21 +873,6 @@
         "name": "PetDto"
       }
     },
-    "TagDto": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "name": {
-          "type": "string"
-        }
-      },
-      "xml": {
-        "name": "TagDto"
-      }
-    },
     "VisitDto": {
       "type": "object",
       "properties": {
@@ -960,16 +883,15 @@
         "pet": {
           "$ref": "#/definitions/PetDto"
         },
-        "quantity": {
-          "type": "integer",
-          "format": "int32"
-        },
         "date": {
           "type": "string",
           "format": "date-time"
         },
-        "complete": {
-          "type": "boolean"
+        "veterinarianName": {
+          "type": "string"
+        },
+        "clinicName": {
+          "type": "string"
         }
       },
       "xml": {
