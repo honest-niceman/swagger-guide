@@ -8,10 +8,10 @@ import java.time.OffsetDateTime;
 import java.util.List;
 
 @Service
-public class StatisticsService {
+public class VisitService {
     private final VisitRepository visitRepository;
 
-    public StatisticsService(VisitRepository visitRepository) {
+    public VisitService(VisitRepository visitRepository) {
         this.visitRepository = visitRepository;
     }
 

@@ -10,14 +10,14 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 
 @Service
-public class PetService {
+public class PetSyncService {
     private final PetApi petApi;
     private final PetRepository petRepository;
     private final PetMapper petMapper;
 
-    public PetService(com.swagger.client.codegen.rest.api.PetApi petApi,
-                      PetRepository petRepository,
-                      PetMapper petMapper) {
+    public PetSyncService(com.swagger.client.codegen.rest.api.PetApi petApi,
+                          PetRepository petRepository,
+                          PetMapper petMapper) {
         this.petApi = petApi;
         this.petRepository = petRepository;
         this.petMapper = petMapper;
